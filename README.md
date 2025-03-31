@@ -27,4 +27,6 @@ open the following url to test yourself :
 
 https://XXXXXX.lightning.force.com/lightning/cmp/c__loanApplicationDemo
 
+for this demo, you'll need to create an Account and a contact at least. Replace the id with your own record id
+
 https://XXXXXX.lightning.force.com/lightning/cmp/c__evalApexDemo
