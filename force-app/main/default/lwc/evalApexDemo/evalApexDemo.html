@@ -1,0 +1,130 @@
+<template>
+
+
+
+  <lightning-card>
+    (Id for a LoanApplication__c object)  : a08J8000009Di2MIAS<br>
+    (Id for a Account object)  , ex  1 : nbContacts + ' contacts records for recordName : '+ acct.Name +' and owner account is '  + acct.Owner.FirstName +' ' + acct.Owner.LastName<br>
+    (Id for a Account object)  , ex  2 : ' contacts records for recordName : '+ Name +' and owner account is '  + Owner.FirstName +' ' + Owner.LastName<br>
+    (Id for a Account object)  , ex  3 : 'nb contacts found for account ' +nbContacts<br>
+    (Id for any object , no wrapper will be found and you can process simple formula)  : 0030900001lmHdWAAU
+  
+      <template if:true={objectInfo}>
+        <div style="width: 400px;">
+          <lightning-card title={objectInfo.objectName}>
+            <template if:true={objectInfo.wrapperClass}>
+                <lightning-button 
+                variant="base"
+                label="click me to get Usage"
+                data-wrapper={objectInfo.wrapperClass}
+                onclick={openWrapperInfo} slot="actions"></lightning-button>
+              <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-large-size_8-of-12 slds-p-horizontal_medium">
+                  <span><lightning-input label="additional record Id" onchange={setAdditionInfo} value={additionalInfo} placeholder={additionalInfoType}></lightning-input></span>
+                </div>
+            </div>
+            </template>
+          </lightning-card>
+          </div>
+      </template>
+      <br>
+
+      <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-large-size_3-of-12 slds-p-horizontal_medium">
+            <span><lightning-combobox label="Choose a formula type" options={options} onchange={handleChange}></lightning-combobox></span>
+          </div>
+          <div class="slds-col slds-large-size_3-of-12 slds-p-horizontal_medium">
+            <span><lightning-input label="Put the record Id target" onchange={setRecordId}></lightning-input></span>
+          </div>
+          <div class="slds-col slds-large-size_3-of-12 slds-p-horizontal_medium">
+            <span><lightning-input label="Put another record Id target" onchange={setRecordId2}></lightning-input></span>
+          </div>
+      </div>
+      <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-large-size_3-of-12 slds-p-horizontal_medium">
+              <span><lightning-textarea name="formula1" label="Your formula" onchange={setValue1} value={formula1}></lightning-textarea></span>
+            </div>
+            <div class="slds-col slds-large-size_3-of-12  slds-p-horizontal_medium">
+              <span><lightning-textarea name="result1" label="result of the formula" value={result1}></lightning-textarea></span>
+          </div>
+          <template if:true={recordId2}>
+            <div class="slds-col slds-large-size_3-of-12  slds-p-horizontal_medium">
+              <span><lightning-textarea name="result1" label="result of the formula" value={result21}></lightning-textarea></span>
+            </div>
+          </template>
+
+      </div>
+      <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-large-size_3-of-12  slds-p-horizontal_medium">
+          <span><lightning-textarea name="formula2" label="Your formula" onchange={setValue2}  value={formula2}></lightning-textarea></span>
+            </div>
+            <div class="slds-col slds-large-size_3-of-12  slds-p-horizontal_medium">
+              <span><lightning-textarea name="result2" label="result of the formula" value={result2}></lightning-textarea></span>
+            </div>
+            <template if:true={recordId2}>
+              <div class="slds-col slds-large-size_3-of-12  slds-p-horizontal_medium">
+                <span><lightning-textarea name="result1" label="result of the formula" value={result22}></lightning-textarea></span>
+              </div>
+            </template>
+      </div>
+      
+
+      <br/><br/>
+      <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-large-size_6-of-12 slds-p-horizontal_medium">
+            <span>
+              <div class="slds-form-element">
+                <label class="slds-checkbox_toggle slds-grid">
+                  <span class="slds-form-element__label slds-m-bottom_none">Restrict the formula to fields available to user (aka disable system mode) :</span>
+                  <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" onclick={setOptionalFields}/>
+                  <span id="checkbox-toggle-16" class="slds-checkbox_faux_container">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-checkbox_on">Enabled</span>
+                    <span class="slds-checkbox_off">Disabled</span>
+                  </span>
+                </label>
+              </div>
+            </span>
+        </div>
+      </div>
+      <br/><br/>
+      <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-large-size_6-of-12">
+          <lightning-button class="slds-align_absolute-center" label="calculate results" onclick={calculate}></lightning-button>
+        </div>
+      </div>
+
+  </lightning-card>
+
+
+  <template if:true={displayModal}>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <lightning-button-icon  icon-name="utility:close" variant="bare"
+          class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+          alternative-text="Close" title="Close"
+          onclick={closeWrapperInformation} >
+        </lightning-button-icon>
+        <div class="slds-modal__header">
+          <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" tabindex="-1">Fields available through the wrapper</h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+          <table border="1">
+            <tr>
+              <td style="text-align: center" class="slds-m-around_xxx-small"><b>Field Name</b></td>
+              <td style="text-align: center" class="slds-m-around_xxx-small"><b>Field Usage</b></td>
+            </tr>            
+            <template for:each={fieldDescriptions} for:item="field">
+              <tr key={field.fieldName}>
+                <td><div class="slds-m-around_xxx-small">{field.fieldName}</div></td>
+                <td><div class="slds-m-around_xxx-small">{field.description}</div></td>
+              </tr>            
+              </template>
+          </table>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+  </template>
+  
+</template>

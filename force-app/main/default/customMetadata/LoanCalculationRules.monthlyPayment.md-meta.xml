@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Monthly Payment</label>
+    <protected>false</protected>
+    <values>
+        <field>Condition__c</field>
+        <value xsi:type="xsd:string">true</value>
+    </values>
+    <values>
+        <field>FieldType__c</field>
+        <value xsi:type="xsd:string">Number</value>
+    </values>
+    <values>
+        <field>FieldValue__c</field>
+        <value xsi:type="xsd:string">TRUNC(record.Loan_Amount__c*record.Loan_Rate__c/1200/(1-(1/(1+record.Loan_Rate__c/1200)^(12*paymentPlan.number__c))),2)</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">4000.0</value>
+    </values>
+    <values>
+        <field>targetField__c</field>
+        <value xsi:type="xsd:string">monthly_cost__c</value>
+    </values>
+</CustomMetadata>

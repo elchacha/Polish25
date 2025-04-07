@@ -1,0 +1,93 @@
+<template>
+
+    <lightning-card>
+
+        <table class="table1">
+            <tr>
+                <td><b>Client Name</b></td>
+                <td>Barbara ********</td>
+                <td rowspan="2" class="slds-p-horizontal_x-small"><lightning-button label="calculate results" onclick={calculate}></lightning-button></td>
+            </tr>
+            <tr>
+                <td><b>Loan Amount</b></td>
+                <td><lightning-input onchange={setAmount}  variant="label-hidden"  value ="70000"></lightning-input></td>
+            </tr>
+        </table>
+        <br><br>
+        <table class="table2">
+            <tr>
+                <td>
+                </td>
+                <td>
+                   <b>Payment Plan 1</b>
+                </td>
+                <td>
+                    <b>Payment Plan 2</b>
+                </td>
+                <td>
+                    <b>Payment Plan 3</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Loan Amount</b>
+                </td>
+                <td>
+                    {plan1.Ammount}
+                </td>
+                <td>
+                    {plan2.Ammount}
+                </td>
+                <td>
+                    {plan3.Ammount}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Loan Term</b>
+                </td>
+                <td>
+                    {plan1.Years}
+                </td>
+                <td>
+                    {plan2.Years}
+                </td>
+                <td>
+                    {plan3.Years}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Interest Rate</b>
+                </td>
+                <td>
+                    {plan1.Loan_Rate__c}
+                </td>
+                <td>
+                    {plan2.Loan_Rate__c}
+                </td>
+                <td>
+                    {plan3.Loan_Rate__c}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Monthly Payment</b>
+                </td>
+                <td>
+                    {plan1.monthly_cost__c}
+                </td>
+                <td>
+                    {plan2.monthly_cost__c}
+                </td>
+                <td>
+                    {plan3.monthly_cost__c}
+                </td>
+            </tr>
+
+
+        </table>
+
+    </lightning-card>
+    
+</template>

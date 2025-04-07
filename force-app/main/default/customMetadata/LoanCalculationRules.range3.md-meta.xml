@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>range3</label>
+    <protected>false</protected>
+    <values>
+        <field>Condition__c</field>
+        <value xsi:type="xsd:string">record.Loan_Amount__c&gt;=bound3 &amp;&amp; record.Loan_Amount__c&lt;=bound4</value>
+    </values>
+    <values>
+        <field>FieldType__c</field>
+        <value xsi:type="xsd:string">Number</value>
+    </values>
+    <values>
+        <field>FieldValue__c</field>
+        <value xsi:type="xsd:string">Rate3</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">3000.0</value>
+    </values>
+    <values>
+        <field>targetField__c</field>
+        <value xsi:type="xsd:string">Loan_Rate__c</value>
+    </values>
+</CustomMetadata>
