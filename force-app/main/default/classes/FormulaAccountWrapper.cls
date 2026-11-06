@@ -21,7 +21,9 @@ global class FormulaAccountWrapper implements IntFormulaWrapper{
     global String nbContacts
     {
         get { 
-            return ''+Database.countQuery('SELECT COUNT() FROM Contact WHERE AccountId =\''+acct.Id+'\'');
+            // static SOQL with a bind variable (no string concatenation)
+            Id accountId = acct.Id;
+            return ''+[SELECT COUNT() FROM Contact WHERE AccountId = :accountId];
         }
     }
 

@@ -135,7 +135,7 @@ public with sharing class EvalApexDemo {
     // looking if we really need to use the wrapper
     private static boolean isWrapperNeeded(){
         for(String varWrapper : wrappedRecord.getFieldsUsage().keySet()){
-            if(formulaToRun.contains(varWrapper)) return true;
+            if(EvalFormulaUtil.usesVariable(formulaToRun,varWrapper)) return true;
         }
         return false;
     }

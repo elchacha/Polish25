@@ -48,9 +48,11 @@ public with sharing class LoanApplicationFullDemo {
             for(LoanCalculationRules__mdt rule : orderedRules){
                 if(rule.targetField__c !=tgtField){
                     if(rule.Condition__c=='true'||(Boolean) formulas.get(rule.Condition__c).evaluate(wrapper)){
-                        record.put(rule.targetField__c, formulas.get(rule.FieldValue__c).evaluate(wrapper));
+                        // evaluate once, reuse the result
+                        Object ruleResult = formulas.get(rule.FieldValue__c).evaluate(wrapper);
+                        record.put(rule.targetField__c, ruleResult);
                         tgtField=rule.targetField__c;
-                        values.put(tgtField,formulas.get(rule.FieldValue__c).evaluate(wrapper));
+                        values.put(tgtField,ruleResult);
                     }
                 }
             }
@@ -86,7 +88,7 @@ public with sharing class LoanApplicationFullDemo {
         private static boolean isWrapperNeeded(String formulaValue){
             if(!useWrapper) return false;
             for(String varWrapper : loanWrapper.getFieldsUsage().keySet()){
-                if(formulaValue.contains(varWrapper)) return true;
+                if(EvalFormulaUtil.usesVariable(formulaValue,varWrapper)) return true;
             }
             return false;
         }
